@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+    </head>
+    
+    <body>
+        <!-- opacity -->
+        <div class="col-12 float-left modal-background hidden"></div>
+        
+        <div id="menus"></div>
+        
+        <!-- JS -->
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script src="js/prefixfree.min.js"></script>
+        <script src="js/localstorage.js"></script>
+        <script src="js/comun.js"></script>
+        <script>
+            $(document).ready(function() {
+                if(pughpharm.isLogged()) {
+                    location.href='todasLasPromociones.html';
+                }
+                else {
+                    //localStorage["apuntador"] = 0;
+                    window.location = "usuarioLealtad.html"
+                }
+            });
+        </script>
+    </body>
+</html>

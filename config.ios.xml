@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="com.avansys.wingstop" version="1" windows-packageVersion="1">
+<!-- This config.xml file created by xdk-to-cli.js at 2017-7-22 12:11:32 -->
+<!-- original comment removed -->
+<!-- original comment removed -->
+<!-- <intelxdk:version value="1.1"/> -->
+<preference name="phonegap-version" value="cli-6.0.0" /> <!-- <intelxdk:cordova-cli version="5.4.1"/> -->  <preference name="android-build-tool" value="gradle" /> 
+<name>WingsTop</name>
+<author>WingsTop</author>
+<content src="index.html"/>
+<access origin="*"/>
+<allow-intent href="http://*/*"/>
+<allow-intent href="https://*/*"/>
+<allow-intent href="tel:*"/>
+<allow-intent href="sms:*"/>
+<allow-intent href="mailto:*"/>
+<allow-intent href="geo:*"/>
+<allow-intent href="itms:*"/>
+<allow-intent href="itms-apps:*"/>
+<plugin name="cordova-plugin-statusbar" spec="2.1.0" />
+<plugin name="cordova-plugin-device" spec="1.1.1" />
+<plugin name="cordova-plugin-splashscreen" spec="3.2.0" />
+<plugin name="cordova-plugin-file" spec="2.1.0" />
+<plugin name="cordova-plugin-inappbrowser" spec="1.1.0" />
+<plugin name="cordova-plugin-camera" spec="1.2.0" />
+<plugin name="cordova-plugin-geolocation" spec="1.0.1" />
+<plugin name="phonegap-plugin-barcodescanner" spec="3.0.0" />
+<plugin name="phonegap-plugin-push" spec="1.4.3" />
+<plugin name="cordova-plugin-actionsheet" spec="2.3.3" />
+<plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="https://github.com/dpa99c/phonegap-launch-navigator" /><!--   If available via Cordova registry; consider changing to an NPM reference. -->
+<preference name="ios-configuration" value="adhoc"/>
+<preference platform="ios" name="deployment-target" value="8.0"/>
+<!--creationInfo:{"src":"jsapp/template-blank-cordova-project-lite/sample.zip","projectTypeName":"com.intel.xdk.projecttype.jsapp"}-->
+<!-- <preference name="debuggable" value="false"/> -->
+<platform name="ios">
+    <!-- below requires the splash screen plugin -->
+    <!-- docs: https://github.com/apache/cordova-plugin-splashscreen -->
+    <preference name="AutoHideSplashScreen" value="true"/>
+    <preference name="FadeSplashScreen" value="false"/>
+    <preference name="FadeSplashScreenDuration" value="2"/>
+    <preference name="ShowSplashScreenSpinner" value="false"/>
+
+    <!-- below requires the status bar plugin -->
+    <!-- docs: https://github.com/apache/cordova-plugin-statusbar -->
+    <!-- see http://devgirl.org/2014/07/31/phonegap-developers-guid -->
+    <preference name="StatusBarOverlaysWebView" value="false"/>
+    <preference name="StatusBarBackgroundColor" value="#000000"/>
+    <preference name="StatusBarStyle" value="lightcontent"/>
+</platform>
+<platform name="android">
+    <!-- below requires the splash screen plugin -->
+    <!-- docs: https://github.com/apache/cordova-plugin-splashscreen -->
+    <preference name="SplashMaintainAspectRatio" value="false"/>
+</platform>
+<preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect --ignore-gpu-blacklist"/>
+<!-- <intelxdk:crosswalk xmlns:intelxdk="http://xdk.intel.com/ns/v1" xwalk-command-line="- -disable-pull-to-refresh-effect"/> -->
+<!-- <intelxdk:crosswalk xmlns:intelxdk="http://xdk.intel.com/ns/v1" xwalk-command-line="- -ignore-gpu-blacklist"/> -->
+<config-file platform="android" parent="/manifest/application" mode="merge">
+    <activity android:launchMode="singleTop" />
+</config-file>
+</widget>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+        
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        <link rel="stylesheet" href="css/menu.css" />
+    </head>
+    
+    <body onclick="afuera();">
+        
+        <!-- opacity -->
+        <div class="col-12 float-left modal-background hidden"></div>
+        
+        <!-- Menú -->
+        <header id="menu"></header>
+        
+        <!-- Header -->
+        <div class="col-12 no-padding" id="header">
+            <div class="col-5 no-pl logo float-left">
+                <img src="img/imgLogo.png" />
+            </div>
+            <div class="col-7 text-center mt-2 float-left no-padding">
+                <h1>EXPERIENCIAS</h1>
+            </div>
+        </div>
+        
+        <div class="main-wrapper col-12 text-center mt-4">
+            <div class="text-center">
+                <div id="contenedorBoardInstancesLealtad">
+                    <div style="margin-top:30px" class="objetivosMision width100 inline">
+                        <img width="100%" src="img/punchCardBanner.png" class="img-icono">
+                        <div id="boardLealtad" style="background-color:#fff; height:30px; width:100%; position: relative; top:-30px;">
+                            <img id="slot1" width="18px" img src="https://05b4d69d89ce37b7ad4f-7be66ae98d72eaf498d9c2c9a6b81409.ssl.cf1.rackcdn.com/4a68a012a2f5a4d3b436d56f2e8f6499-20170302T033006Z.png" style="margin: 3px 5px" />
+                            <img id="slot2" width="18px" img src="https://05b4d69d89ce37b7ad4f-7be66ae98d72eaf498d9c2c9a6b81409.ssl.cf1.rackcdn.com/4a68a012a2f5a4d3b436d56f2e8f6499-20170302T033006Z.png" style="margin: 3px 5px" />
+                            <img id="slot3" width="18px" img src="https://05b4d69d89ce37b7ad4f-7be66ae98d72eaf498d9c2c9a6b81409.ssl.cf1.rackcdn.com/4a68a012a2f5a4d3b436d56f2e8f6499-20170302T033006Z.png" style="margin: 3px 5px" />
+                            <img id="slot4" width="18px" img src="https://05b4d69d89ce37b7ad4f-7be66ae98d72eaf498d9c2c9a6b81409.ssl.cf1.rackcdn.com/4a68a012a2f5a4d3b436d56f2e8f6499-20170302T033006Z.png" style="margin: 3px 5px" />
+                            <img id="slot5" width="18px" img src="https://05b4d69d89ce37b7ad4f-7be66ae98d72eaf498d9c2c9a6b81409.ssl.cf1.rackcdn.com/4a68a012a2f5a4d3b436d56f2e8f6499-20170302T033006Z.png" style="margin: 3px 5px" />
+                            <img id="slot6" width="18px" img src="https://05b4d69d89ce37b7ad4f-7be66ae98d72eaf498d9c2c9a6b81409.ssl.cf1.rackcdn.com/4a68a012a2f5a4d3b436d56f2e8f6499-20170302T033006Z.png" style="margin: 3px 5px" />
+                            <img id="slot7" width="18px" img src="https://05b4d69d89ce37b7ad4f-7be66ae98d72eaf498d9c2c9a6b81409.ssl.cf1.rackcdn.com/4a68a012a2f5a4d3b436d56f2e8f6499-20170302T033006Z.png" style="margin: 3px 5px" />
+                            <img id="slot8" width="18px" img src="https://05b4d69d89ce37b7ad4f-7be66ae98d72eaf498d9c2c9a6b81409.ssl.cf1.rackcdn.com/4a68a012a2f5a4d3b436d56f2e8f6499-20170302T033006Z.png" style="margin: 3px 5px" />
+                            <img id="slot9" width="18px" img src="https://05b4d69d89ce37b7ad4f-7be66ae98d72eaf498d9c2c9a6b81409.ssl.cf1.rackcdn.com/4a68a012a2f5a4d3b436d56f2e8f6499-20170302T033006Z.png" style="margin: 3px 5px" />
+                            <img id="slot10" width="18px" img src="https://05b4d69d89ce37b7ad4f-7be66ae98d72eaf498d9c2c9a6b81409.ssl.cf1.rackcdn.com/4a68a012a2f5a4d3b436d56f2e8f6499-20170302T033006Z.png" style="margin: 3px 5px" />
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="contenedorBoardInstances" style="display:none"></div>
+            </div>
+        </div>
+        
+        <!-- Menu -->
+        <div class="nav-inf" id="menus">
+            <a href="#">
+                <span class="fa fa-bars"></span>
+            </a>
+        </div>
+        
+        <div style="color:#fff" id="divDebug"></div>
+        
+        <div class="dialogDetallePunchCard" style="display: none;" id="dialogDetallePunchCard">
+            <div class="contenedorDetallePunchCard">
+                <div id="cerrarModal" onclick="cerrarDialogo();">
+                    <i class="fa fa-times fa-3x"></i>
+                </div>
+                <div class="contenidoDetallePunchCard">
+                </div>
+            </div>
+        </div>
+        
+        <!--JS-->
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script> 
+        <script type="text/javascript" src="js/localstorage.js"></script>
+        <script type="text/javascript" src="js/comun.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/prefixfree.min.js"></script>
+        <script type="text/javascript" src="js/picnicPunchCards.js"></script>
+        <script type="text/javascript">
+            function cerrarDialogo() {
+                $("#dialogDetallePunchCard").hide();
+            }
+        </script>
+    </body>
+</html>

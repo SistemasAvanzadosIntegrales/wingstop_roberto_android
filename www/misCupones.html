@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+        
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        <link rel="stylesheet" href="css/menu.css" />
+        <link rel="stylesheet" href="css/modal.css" />
+    </head>
+    
+    <body onclick="afuera();">
+        
+        <!-- opacity -->
+        <div class="col-12 float-left modal-background hidden"></div>
+        
+        <!-- Menú -->
+        <header id="menu"></header>
+        
+        <!-- Header -->
+        <div class="col-12 no-padding" id="header">
+            <div class="col-5 no-pl logo float-left">
+                <img src="img/imgLogo.png" />
+            </div>
+            <div class="col-7 text-center mt-2 float-left no-padding">
+                <h1>CUPONES</h1>
+            </div>
+        </div>
+        
+        <div class="main-wrapper col-12 text-center mt-4">
+            
+            <!-- Buttons -->
+            <div class="col-6 mt-2 float-left no-pl">
+                <a href="misCupones.html" class="btn btn-primary btn-fill btn-block">
+                    CUPONES
+                </a>
+            </div>
+            <div class="col-6 float-left mt-2 no-pr">
+                <a href="todasLasPromociones.html" class="btn btn-primary btn-fill btn-block">
+                    PROMOCIONES
+                </a>
+            </div>
+
+            <!-- Imagenes promociones -->
+            <div class="col-12 mt-4 float-left no-padding" id="contenedorPromociones" style="overflow: hidden;"></div>
+        </div>
+        
+        <div id="fade" class="overlay" onclick = "document.getElementById('light').style.display='none'; document.getElementById('fade').style.display='none'"></div>
+
+        <!-- ventana modal -->
+        <div id="light" class="modal text-center">
+            <h4>¿Deseas canjear este cupón?<br></h4>
+            <!-- Buttons -->
+            <div class="col-6 mt-4 float-left no-pl">
+                <a href="#" onclick="cerrar_modal();" class="btn btn-primary btn-fill btn-block">
+                    REGRESAR
+                </a>
+            </div>
+            <div class="col-6 float-left mt-4 no-pr">
+                <a href="#" onclick="modal2();" class="btn btn-primary btn-fill btn-block">
+                    ACEPTAR
+                </a>
+            </div>
+        </div>
+        <!-- fin ventana modal -->
+
+        <div id="fade2" class="overlay" onclick = "document.getElementById('light2').style.display='none'; document.getElementById('fade').style.display='none'"></div>
+        <!-- fin base semi-transparente -->
+
+        <!-- ventana modal -->  
+        <div id="light2" class="modal2 text-center">
+            <h2 class="bullet">¡Operación exitosa!</h2>
+            <label id="msg2" style="font-size: 2em;"></label>
+            <div id="qr"></div>
+            <div class="col-12 mt-4 text-center description">
+                Puedes hacer valido éste cupón presentando el siguiente QR Code
+            </div>
+            <div class="col-8 offset-2 mt-4 no-padding float-left">
+                <a href="#" onclick="aceptar();" class="btn btn-primary btn-fill btn-block">
+                    Aceptar
+                </a>
+            </div>
+        </div>
+        <!-- fin ventana modal fa fa-arrow-circle-left -->
+        
+        <!-- Menu -->
+        <div class="nav-inf" id="menus">
+            <a href="#">
+                <span class="fa fa-bars"></span>
+            </a>
+        </div>
+
+        <!--JS-->
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/prefixfree.min.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        <script type="text/javascript" src="js/localstorage.js"></script>
+        <script type="text/javascript" src="js/comun.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/qrcode.js"></script>
+        <script type="text/javascript" src="js/verPromociones.js"></script>
+        
+        <script>
+            extraerPromociones(0);
+            
+            $(document).ready(function() {
+                
+                document.addEventListener("deviceready", onDeviceReady, false);
+
+                // Cordova is ready
+                function onDeviceReady() {
+                    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, onFileSystemFail);
+                }
+
+                function onFileSystemSuccess(fileSystem) {
+                    console.log(fileSystem.name);
+                    var directoryEntry = fileSystem.root;
+                    directoryEntry.getDirectory("Pictures", {create: true, exclusive: false}, onDirectorySuccess, onDirectoryFail)
+                }
+
+                function onDirectorySuccess(parent) {
+                   // alert("Carpeta Creada");
+                }
+
+                function onDirectoryFail(error) {
+                   // alert(JSON.stringify(error));
+                }
+
+                function onFileSystemFail(evt) {
+                   // alert(evt.target.error.code);
+                }
+                
+                loginRealm();
+                
+                if(localStorage.getItem('u_cupon')) {
+                      document.getElementById("menus").style.display="block";
+                      $('#cup').append('<img onclick="modal2();" src="img/imgQRCode.jpg"><br/><br/><p class="text-azul">Tu código es: <label class="text-azul msg3"></label></p></div>');
+                      $('.msg3').html(localStorage.getItem("u_cupon"));
+                      $('#msg2').html(localStorage.getItem("u_cupon"));
+                }    
+            });
+            
+            function modal(a){
+                //alert(a);
+                localStorage['cupon_tem2'] = a;
+                document.getElementById('light').style.display='block';
+                document.getElementById('fade').style.display='block';
+                $('.msg3').html(localStorage.getItem("cupon_tem2"));
+                $('#msg2').html(localStorage.getItem("cupon_tem2"));
+                
+                $('html, body').animate({ scrollTop: 0 }, 'fast');
+            }
+            
+            function cerrar_modal(){
+                document.getElementById('light').style.display='none';
+                document.getElementById('fade').style.display='none';
+                document.getElementById('light2').style.display='none';
+                document.getElementById('fade2').style.display='none';
+                
+                $('html, body').animate({ scrollTop: 0 }, 'fast');
+            }
+            
+            function modal2(){
+                document.getElementById('light').style.display='none';
+                document.getElementById('fade').style.display='none';
+                document.getElementById('light2').style.display='block';
+                document.getElementById('fade2').style.display='block';
+                update_qrcode2('msg2');
+                
+                $('html, body').animate({ scrollTop: 0 }, 'fast');
+            }
+            
+            function aceptar(){
+                cerrar_modal();
+            }
+      </script>
+    </body>
+</html>

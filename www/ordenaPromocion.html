@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+        
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        <link rel="stylesheet" href="css/menu.css" />
+        <link rel="stylesheet" href="css/modal.css" />
+        <link rel="stylesheet" href="css/main-ordena.css" />
+    </head>
+    
+    <body onclick="afuera();">
+        <!-- opacity -->
+        <div class="col-12 float-left modal-background hidden"></div>
+        
+        <!-- Menú -->
+        <header id="menu"></header>
+        
+         <!-- Header -->
+        <section class="col-12 no-padding" id="header">
+            <div class="col-5 no-pl logo float-left">
+                <img src="img/imgLogo.png" />
+            </div>
+            <div class="col-7 text-center mt-2 float-left no-padding">
+                <h1>ORDENA</h1>
+            </div>
+        </section>
+        
+        <!-- Navegación -->
+        <section id="nav-indicador" class="col-12 float-left"> 
+            <a href="ordenaPromociones.html" class="pull-left"><i class="fa fa-arrow-circle-left"></i></a>
+            <a href="ordena.html" class="pull-left ml-2"><i class="fa fa-home"></i></a>
+            <span>Paso 1 de 3 "Promoción"</span>
+            <a href="ordenaConfirma.html" id="shopping-cart" class="pull-right mr-2">
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                <span id="number-cart"></span>
+            </a>
+        </section>
+        
+        <!-- Pestaña -->
+        <section id="nav-menu-history" class="col-12 float-left">
+            <ul>
+                <li class="text-center inline left disabled"><a href="#">Menú</a></li>
+                <li class="text-center inline center active"><a href="#">Promociones</a></li>
+                <li class="text-center inline right disabled"><a href="#">Historial</a></li>
+            </ul>
+        </section>
+        
+        <section class="main-wrapper col-12 float-left no-pt mt-3">
+            
+            <!-- Modal -->
+            <div id="fade" class="overlay" onclick="document.getElementById('light').style.display='none'; document.getElementById('fade').style.display='none'"></div>
+            <!-- fin base semi-transparente -->
+            
+            <div id="light" class="modalOrdena text-center">
+                <h3 class="text-center text-bold text-nm">
+                    Selecciona los complementos
+                    <div id="addons-message">
+                        <span id="addons-message-how">0</span> de <span id="addons-message-max"></span>
+                    </div>
+                </h3>
+
+                <section id="plate-addons" class="col-12 no-padding float-left text-left"></section>
+                
+                <hr class="float-left" style="width: 100%;">
+                
+                <section id="plate-addons-count" class="col-12 no-padding float-left text-left">
+                    <h3 class="text-center text-bold text-nm" style="font-size: 12px;">
+                        Este platillo tiene <span id="addons-message-count">0</span> piezas, déjanos saber cuántas piezas quieres para cada uno de los complementos
+                    </h3>
+                </section>
+                
+                <!-- Buttons -->
+                <section class="col-12 float-left mt-3 mb-3 no-padding">
+                    <div class="col-6 float-left no-pl">
+                        <a href="#" onclick="cerrar_modal();" class="btn btn-primary btn-fill btn-block">
+                            CERRAR
+                        </a>
+                    </div>
+                    <div class="col-6 float-left no-pr">
+                        <a href="#" onclick="addPromotion();" class="btn btn-primary btn-fill btn-block">
+                            CONTINUAR
+                        </a>
+                    </div>
+                </section>
+                
+                <div class="col-12 float-left no-padding">
+                    <p class="alert alert-danger" id="alertaRegistro" style="display:none !important;"></p>
+                </div>
+            </div>
+            
+            <section id="platillo-detalle" class="col-12 float-left no-padding">
+                <div class="marco no-padding">
+                    
+                    <!-- Imagen de platillo -->
+                    <figure id="plate-img"></figure> 
+                    
+                    <article class="padding-md">
+                        <!-- Titulo -->
+                        <h2 id="plate-title" class="text-md text-color-default text-center text-bold mb-3"></h2>
+                        
+                        <!-- Descripción -->
+                        <p id="plate-description"></p>
+                        
+                        <!-- Opciones -->
+                        <section class="col-12 float-left mt-3 no-padding text-center">
+                            <div class="col-8 offset-2 float-left no-pr">
+                                <a href="#" onclick="modal();" id="continue-promotion" class="btn btn-primary btn-fill btn-block">
+                                    CONTINUAR
+                                </a>
+                            </div>
+                        </section>
+                        
+                        <div class="col-10 offset-1 float-left no-pr mb-3 mt-4"></div>
+                    </article>
+                </div>
+            </section>
+        </section>
+        
+       <!-- Menu -->
+        <div class="nav-inf" id="menus">
+            <a href="#">
+                <span class="fa fa-bars"></span>
+            </a>
+        </div>
+        
+        <input type="hidden" id="average-max" value="" />
+ 
+        <!--JS-->
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/prefixfree.min.js"></script>
+        <script type="text/javascript" src="js/localstorage.js"></script> 
+        <script type="text/javascript" src="js/comun.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        
+        <script type="text/javascript">
+            function modal() {
+                document.getElementById('light').style.display='block';
+                document.getElementById('fade').style.display='block';
+            }
+            
+            function cerrar_modal() {
+                document.getElementById('light').style.display='none';
+                document.getElementById('fade').style.display='none';
+            }
+            
+            getPromotion();
+        </script>
+    </body>
+</html>

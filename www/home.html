@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+        
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        <link rel="stylesheet" href="css/menu.css" />
+    </head>
+    
+    <body onclick="afuera();">
+        
+        <!-- Header -->
+        <div class="col-12 no-padding" id="header">
+            <div class="col-10 col-sm-11 text-center mt-3 float-left">
+                <h1 class="minTitle" style="    font-size: 25px; padding: 0; margin-top: -4px;">Bienvenido</h1>
+            </div>
+            <div class="btn-regresar float-right" onclick="javascript:salir();">
+                <a id='btnRegreso' href="todasLasPromociones.html">
+                    <span class="fa fa-sign-out"></span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Perfil -->
+        <div class="col-12" id="sesionUsuario" style="background: transparent"></div>
+        
+        <div class="main-wrapper no-pt col-12 text-center">
+            <div class="col-12 float-left">
+                <img src="img/logo_blanco.png" width="100%">
+            </div>
+
+            <div class="col-12 float-left mt-4">
+                <label id="lblNombreHome"></label>
+            </div>
+            
+            <div class="col-12 float-left">
+                <label id="lblPuntos"></label>
+            </div>
+
+            <div class="col-12 float-left mt-2"><a class="btn btn-fill btn-primary-menu" style="width: 80%" href="miPerfil.html">VER MI PERFIL</a></div>
+            
+            <div class="col-12 float-left mt-4"><a class="btn btn-primary-menu" href="tarjetaQR.html">Mi Wingstop ID</a></div>
+            <div class="col-12 float-left mt-2"><a class="btn btn-primary-menu" href="sucursales.html">Sucursales</a></div>
+            <div class="col-12 float-left mt-2"><a class="btn btn-primary-menu" href="misPunchcards.html">Experiencias Wingstop</a></div>
+            <div class="col-12 float-left mt-2"><a class="btn btn-primary-menu" href="promociones.html">Promociones y Mis Cupones</a></div>
+            <div class="col-12 float-left mt-2"><a class="btn btn-primary-menu" href="ordena.html">Ordena en línea</a></div>
+            <div class="col-12 float-left text-right mt-4"><a href="acercaDe.html">¡Acerca de esta app!</a></div>
+        </div>
+        
+        <!-- Menu -->
+        <div class="nav-inf" id="menus"></div>
+
+        <!--JS-->
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script> 
+        <script type="text/javascript" src="js/bootstrap.min.js"></script> 
+        <script type="text/javascript" src="js/localstorage.js"></script>
+        <script type="text/javascript" src="js/comun.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                if(pughpharm.isLogged()) {
+                    loginRealm(1);
+                }
+                else {
+                    window.location = "index.html";
+                }
+            });
+        </script>
+    </body>
+</html>

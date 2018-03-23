@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+        
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        <link rel="stylesheet" href="css/menu.css" />
+        <link rel="stylesheet" href="css/main-ordena.css" />
+    </head>
+    
+    <body onclick="afuera();">
+        <!-- opacity -->
+        <div class="col-12 float-left modal-background hidden"></div>
+        
+        <!-- Menú -->
+        <header id="menu"></header>
+        
+         <!-- Header -->
+        <section class="col-12 no-padding" id="header">
+            <div class="col-5 no-pl logo float-left">
+                <img src="img/imgLogo.png" />
+            </div>
+            <div class="col-7 text-center mt-2 float-left no-padding">
+                <h1>ORDENA</h1>
+            </div>
+        </section>
+        
+        <!-- Navegación -->
+        <section id="nav-indicador" class="col-12 float-left"> 
+            <!--<a href="ordenaPlatillo.html" class="pull-left"><i class="fa fa-arrow-circle-left"></i></a>-->
+            <a href="ordena.html" class="pull-left ml-2"><i class="fa fa-home"></i></a>
+            <span>Paso 2 de 3 "Entrega"</span>
+            <a href="ordenaConfirma.html" id="shopping-cart" class="pull-right mr-2">
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                <span id="number-cart"></span>
+            </a>
+        </section>
+        
+        <section class="main-wrapper col-12 float-left no-pt no-mt">
+            <h2 class="text-md text-color-default text-center text-bold margin-v-md">¿Donde deseas recoger tu pédido?</h2>
+            
+            <form>
+                <select id="sucursales" class="form-control margin-v-sm required">
+                    <option value="">Elige tu sucursal</option>
+                </select>
+                
+                <!--<select class="form-control margin-v-sm">
+                    <optgroup>
+                        <option>Selecciona una opción</option>
+                        <option>#2</option>
+                        <option>#3</option>
+                    </optgroup>
+                </select>-->
+
+                <h2 class="text-md text-color-default text-center text-bold margin-v-md">¿Cuando pasas por el?</h2>
+                
+                <!--
+                 <select class="form-control margin-v-sm display-block required" id="collect" name="collect">
+                    <option value="1">Recoger de inmediato</option>
+                    <option value="2">Recoger de inmediato 1</option>
+                    <option value="3">Recoger de inmediato 2</option>
+                </select>
+                -->
+                
+                <div class="margin-v-sm">
+                    <label class="no-margin">Fecha:</label>
+                    <input class="form-control required" type="date" placeholder="fecha" id="collect_date" name="collect_date" />
+                </div>
+                
+                <div class="margin-v-sm mb-3">
+                    <label class="no-margin">Horario:</label>
+                    <input class="form-control required" type="time" placeholder="hora" id="collect_time" name="collect_time" />
+                </div>
+                
+                <!-- Alerta -->
+                <div class="col-12 float-left no-padding mt-3 text-center">
+                    <p class="alert alert-danger" id="alertaRegistro" style="display:none !important;"></p>
+                </div>
+                
+                <section class="col-12 float-left mt-3 mb-3 no-padding">
+                    <!--<div class="col-6 float-left no-pl">
+                        <a href="ordenaPlatillo.html" class="btn btn-primary btn-fill btn-block">
+                            REGRESAR
+                        </a>
+                    </div>-->
+                    <div class="col-8 offset-2 float-left no-pr">
+                        <a href="#" id="branchSave" class="btn btn-primary btn-fill btn-block">
+                            CONTINUAR
+                        </a>
+                    </div>
+                </section>
+            </form>
+        </section>
+        
+        <!-- Menu -->
+        <div class="nav-inf" id="menus">
+            <a href="#">
+                <span class="fa fa-bars"></span>
+            </a>
+        </div>
+ 
+        <!--JS-->
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/prefixfree.min.js"></script>
+        <script type="text/javascript" src="js/localstorage.js"></script> 
+        <script type="text/javascript" src="js/comun.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        
+        <script type="text/javascript">
+            
+            //Obtener dia y hora actual
+            var tiempo = new Date();
+			var year   = tiempo.getFullYear();
+			var month  = ("0" + (tiempo.getMonth() + 1)).slice(-2);
+			var day    = ("0" + tiempo.getDate()).slice(-2);
+            //var m      = tiempo.getMinutes();
+            var m      = ("0" + tiempo.getMinutes()).slice(-2);
+            var h      = tiempo.getHours() + 1;
+            
+            var time   = h+':'+m;
+			var date   = year+'-'+month+'-'+day;
+            
+            //console.log(date);
+            
+            $( "#collect_date" ).attr('min', date);
+            
+            if ( !localStorage.getItem('collect_date') ) {
+                document.getElementById('collect_date').value = date;
+            }
+            
+            document.getElementById("collect_time").min           = "14:00"; 
+            document.getElementById("collect_time").max           = "23:59"; 
+            document.getElementById("collect_time").defaultValue  = time; 
+			
+            //Add optgroup in branchs
+            $.ajax({
+                url: ruta_generica,
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    funcion   : 'getStatesOffice',
+                    idCliente : cliente
+                },
+                success:function(resp){
+                    
+                    //Validar que no haya errores
+                    if( resp[0].error == '' ) {
+                        
+                        //Recorrer todos los objetos.
+                        for( var i = 0; i <= resp.length-1; i++ ) {
+                            
+                            //Capitalizar texto
+                            var caps = resp[i].nombre.toLowerCase();                            
+                            caps = caps.charAt(0).toUpperCase() + caps.slice(1);
+                            
+                            //Adición de opciones al selector.
+                            $("#sucursales").append('<optgroup label="'+caps+'" id="'+resp[i].id+'" ></optgroup>');
+                        }
+                    }
+                    else {
+                        $("#alertaRegistro").html(resp.error).show();
+                    }
+                    
+                    getBranchs();
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("function: getStatesOffice()");
+                    console.log("Status: " + textStatus);
+                    console.log("Error: " + errorThrown);
+                }
+            });
+        </script>
+    </body>
+</html>

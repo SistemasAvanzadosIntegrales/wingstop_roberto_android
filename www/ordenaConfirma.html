@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+        
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        <link rel="stylesheet" href="css/menu.css" />
+        <link rel="stylesheet" href="css/main-ordena.css" />
+        <link rel="stylesheet" href="css/modal.css" />
+        
+        <!-- JS -->
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="xdk/init-dev.js"></script>        
+        <script type="text/javascript" src="cordova.js"></script>     
+        
+        <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    </head>
+    
+    <body onclick="afuera();">
+        <!-- opacity -->
+        <div class="col-12 float-left modal-background hidden"></div>
+        
+        <!-- Menú -->
+        <header id="menu"></header>
+        
+         <!-- Header -->
+        <section class="col-12 no-padding" id="header">
+            <div class="col-5 no-pl logo float-left">
+                <img src="img/imgLogo.png" />
+            </div>
+            <div class="col-7 text-center mt-2 float-left no-padding">
+                <h1>ORDENA</h1>
+            </div>
+        </section>
+        
+        <!-- Navegación -->
+        <section id="nav-indicador" class="col-12 float-left"> 
+            <a href="ordena.html" class="pull-left ml-2"><i class="fa fa-home"></i></a>
+            <span>Paso 3 de 3 "Confirmación"</span>
+            <a href="ordenaConfirma.html" id="shopping-cart" class="pull-right mr-2">
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                <span id="number-cart"></span>
+            </a>
+        </section>
+        
+        <section class="main-wrapper col-12 float-left no-pt no-mt" id="entrega">
+            <h2 class="text-md text-color-default text-center text-bold margin-v-sm">Resumen de tu pedido</h2>
+            
+            <!-- Articulos -->
+            <table class="table table-striped table-hover table-condensed text-center">
+                <tbody id="tablaEstadoCuenta">
+                    <tr class="headers">
+                        <th>No.</th>
+                        <th>Articulo</th>
+                        <th>Precio</th>
+                        <th></th>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h2 id="average" class="text-md text-center text-bold margin-v-md"></h2>
+            
+            <p class="margin-v-sm-top" id="send-pedido">Tu pedido será entregado en:</p>
+            <a id="deliver" href="ordenaEntrega.html"></a>
+
+            <!--<p class="margin-v-sm-top">Método de pago:</p>
+            <a id="payment" href="ordenaFormaPago.html"></a>-->
+            
+            <form class="margin-v-md-top" id="ordenaComentarios">
+                <label for="">Comentarios:</label>
+                <textarea id="comentarios" name="comentarios" placeholder="Comentarios e indicaciones adicionales" class="form-control" rows="10" cols="10"></textarea>
+                
+                <!--
+                <h2 class="text-nm  text-center text-bold margin-v-md-top">¿Tienes un código de promoción?</h2>
+                <div class="margin-v-sm">
+                    <input class="form-control" type="text" id="promocion" name="promocion" placeholder="Ingresa aquí el código">
+                </div>
+                -->
+                
+                <section class="col-8 offset-2 no-padding text-center mt-5 mb-3" id="realizaPago">
+                    <a href="#" onclick="modal();" class="btn btn-primary btn-fill btn-block mt-2">
+                        REALIZAR PAGO
+                    </a>
+                </section>
+            </form>
+            
+            <div id="fade" class="overlay" onclick="document.getElementById('light').style.display='none'; document.getElementById('fade').style.display='none'; document.getElementById('light2').style.display='none'; document.getElementById('light3').style.display='none'"></div>
+            <!-- fin base semi-transparente -->
+
+            <!-- ventana modal -->
+            <div id="light" class="modal2 text-center">
+                <h2 class="text-md text-color-default text-center text-bold margin-v-sm">¡Confirmación del pedido!</h2>
+                
+                <p class="mt-4">Se hará el cargo por <br>
+                <b id="average-modal"></b>
+                <br>
+
+                <p class="margin-v-md text-center"><b>¿Proceder a generar el pago por?</b></p>
+
+                <!-- Buttons -->
+                <section class="col-8 offset-2 float-left mb-3 no-padding">
+                    <!--<div id="paypal-button"></div>-->
+                    <a href="#" onclick="confirmaPedido();" id="confirmarPedido" class="btn btn-primary btn-fill btn-block">
+                        Confirmar
+                    </a>
+                    <a href="#" onclick="corroborarPedido();" id="corroborarPedido" class="btn btn-primary btn-fill btn-block hidden">
+                        Corroborar
+                    </a>
+                </section>
+                <section class="col-8 offset-2 float-left mb-3 no-padding">
+                    <a href="#" onclick="cerrar_modal();" id="closePedido" class="btn btn-primary btn-fill btn-block">
+                        CANCELAR
+                    </a>
+                </section>
+                
+                <div class="col-12 float-left no-padding">
+                    <p class="alert alert-danger" id="alertaRegistro" style="display:none !important;"></p>
+                </div>
+            </div>
+            <!-- fin ventana modal -->
+            
+            <!-- ventana modal --> 
+            <div id="light3" class="modal2 text-center">
+                <h2 class="text-md text-color-default text-center text-bold margin-v-sm">¿Seguro que quieres eliminar el articulo?</h2>
+                
+                <!-- Buttons -->
+                <section class="col-12 float-left mb-3 no-padding">
+                    <div class="col-6 float-left no-pl">
+                        <a id="deleteRow" href="#" class="btn btn-primary btn-fill btn-block">
+                            SI
+                        </a>
+                    </div>
+                    <div class="col-6 float-left no-pr">
+                        <a href="#" onclick="cerrar_modal();" class="btn btn-primary btn-fill btn-block">
+                            NO
+                        </a>
+                    </div>
+                </section>
+            </div>
+            <!-- fin ventana modal -->
+            
+            <!-- ventana modal --> 
+            <div id="light4" class="modal2 text-center">
+                <h2 class="text-md text-color-default text-center text-bold margin-v-sm">¿Seguro que quieres eliminar esta promoción?</h2>
+
+                <!-- Buttons -->
+                <section class="col-12 float-left mb-3 no-padding">
+                    <div class="col-6 float-left no-pl">
+                        <a id="deleteRowPromo" href="#" class="btn btn-primary btn-fill btn-block">
+                            SI
+                        </a>
+                    </div>
+                    <div class="col-6 float-left no-pr">
+                        <a href="#" onclick="cerrar_modal();" class="btn btn-primary btn-fill btn-block">
+                            NO
+                        </a>
+                    </div>
+                </section>
+            </div>
+            <!-- fin ventana modal -->
+        </section>
+
+        <!-- Menu -->
+        <div class="nav-inf" id="menus">
+            <a href="#">
+                <span class="fa fa-bars"></span>
+            </a>
+        </div>
+        
+        <!--JS-->
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/prefixfree.min.js"></script>
+        <script type="text/javascript" src="js/localstorage.js"></script> 
+        <script type="text/javascript" src="js/comun.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        
+        <script type="text/javascript">
+            function modal() {
+                document.getElementById('light').style.display='block';
+                document.getElementById('fade').style.display='block';
+            }
+            
+            function cerrar_modal() {
+                document.getElementById('light').style.display='none';
+                document.getElementById('fade').style.display='none';
+                document.getElementById('light3').style.display='none';
+                document.getElementById('light4').style.display='none';
+            }
+            
+            function modal3(id, consecutivo) {
+                document.getElementById('light').style.display='none';
+                document.getElementById('light3').style.display='block';
+                document.getElementById('light4').style.display='none';
+                document.getElementById('fade').style.display='block';
+                   
+                $( "#deleteRow" ).attr('onclick', 'deleteRow("'+id+'", "'+consecutivo+'")');
+            }
+            
+            function modal4(id, promo) {
+                document.getElementById('light').style.display='none';
+                document.getElementById('light3').style.display='none';
+                document.getElementById('light4').style.display='block';
+                document.getElementById('fade').style.display='block';
+                   
+                $( "#deleteRowPromo" ).attr('onclick', 'deleteRowPromo("'+id+'", "'+promo+'")');
+            }
+            
+            function confirmaPedido() {
+                
+                PaymentPaypal(localStorage.getItem('importe'));
+                
+                $("#confirmarPedido").remove();
+                $("#closePedido").remove();
+                $("#corroborarPedido").removeClass('hidden');
+            }
+            
+            setShoppingSummary();
+            
+            //Branch and Pay method
+            if ( localStorage.getItem('branch') && localStorage.getItem('collect_date') && localStorage.getItem('collect_time') ) {
+                var sucursal  = JSON.parse(localStorage.getItem('branch'));
+                
+                var html = "Sucursal "+sucursal.Nombre+" el día "+localStorage.getItem('collect_date')+" a las "+localStorage.getItem('collect_time')+"  hrs. <i class='fa fa-pencil'></i>";
+                $("#deliver").append(html);
+            }
+            else {
+                var html = "Da clic aquí para insertar datos de entrega";
+                //console.log(html);
+                $("#deliver").append(html);
+                $("#ordenaComentarios").remove();
+            }
+        </script>
+    </body>
+</html>

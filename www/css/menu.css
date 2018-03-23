@@ -1,0 +1,104 @@
+* {
+	padding:0;
+	margin:0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.nav-inf {
+    padding: 6px 15px;
+    height: 48px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 9999;
+    background: #000; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#000 10%, #333); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#000 10%, #333); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#000 10%, #333); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#000, #333); /* Standard syntax */
+}
+
+.nav-inf a {
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+#usr {
+    max-width: 100%;
+    border-radius: 200px;
+}
+
+.img-circle {
+    max-width: 160px;
+    max-height: 160px;
+    border-radius: 200px;
+}
+
+nav {
+    width: 80%;
+    height: calc(100% - 48px);
+    position: fixed;
+    margin: 0;
+    overflow: auto;
+    background: #fff;
+    z-index: 9999999;
+}
+
+.menu-items {
+    padding: 0 0.5rem;
+}
+
+.menu-items .link {
+    padding: 5px;
+}
+
+.menu-items .link a {
+    font-size: 16px;
+}
+
+.menu-items img {
+    width: 35px;
+}
+
+#menu h2 {
+    font-weight: bold;
+    color: #0d6c3f;
+    font-size: 16px !important;
+}
+
+#menu hr {
+    border: 3px solid #076938 !important;
+}
+
+#menu .acerca {
+    bottom: 0;
+    position: initial;
+}
+
+#menu .acerca i {
+    color: #E8483B;
+    font-size: 12px
+}
+
+#menu .acerca a {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+#menu .facebook img {
+    width: 35px;
+}
+
+.modal-background {
+    width: 100%;
+    height: calc(100% - 48px);
+    position: fixed;
+    margin: 0;
+    overflow: hidden;
+    z-index: 9999999;
+    background: #000;
+    opacity: 0.5
+}
+

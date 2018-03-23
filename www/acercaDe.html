@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+        
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        <link rel="stylesheet" href="css/menu.css" />
+    </head>
+    
+    <body onclick="afuera();">
+        
+        <!-- opacity -->
+        <div class="col-12 float-left modal-background hidden"></div>
+        
+        <!-- Menú -->
+        <header id="menu"></header>
+        
+        <!-- Header -->
+        <div class="col-12 no-padding" id="header">
+            <div class="col-5 no-pl logo float-left">
+                <img src="img/imgLogo.png" />
+            </div>
+            <div class="col-7 text-center mt-2 float-left no-padding">
+                <h1>Esta App</h1>
+            </div>
+        </div>
+        
+        <div class="main-wrapper col-12 text-center mt-4">
+
+            <div class="mt-4">
+                <p style="text-align: justify;">
+                    La Aplicación WING-STOP para clientes frecuentes esta desarrolla por Easier Loyalty, creada para amantes de los productos WING-STOP con la finalidad de recompensar su lealtad y hacer sus visitas más divertidas.<br>
+                    Entre más interactúe con la aplicación usted podrá obtener mayor número de premios y promociones destacándose sobre los demás.
+                    <br>
+                    <br>
+                    Esté muy atento ya que mediante su navegación en la aplicación, más sus consumos registrados, recibirá sorpresas instantáneas dentro de la aplicación.
+                    <br>
+                    <br>
+                    Además, la aplicación le ahorrará perder tiempo en la fila, ya que gracias al botón de ordenar, ubicado dentro del menú, usted podrá seleccionar la manera que más le convenga para realizar sus transacciones.<br>
+                    Si desea más información acerca de la aplicación ingresa a nuestra página en internet www.wingstop.com.mx y con gusto resolveremos todas sus dudas. 
+                </p>
+            </div>
+        </div>
+        
+       <!-- Menu -->
+        <div class="nav-inf" id="menus">
+            <a href="#">
+                <span class="fa fa-bars"></span>
+            </a>
+        </div>
+ 
+        <!--JS-->
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/localstorage.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        <script type="text/javascript" src="js/comun.js"></script>
+    </body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+        
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        <link rel="stylesheet" href="css/menu.css" />
+        <link rel="stylesheet" href="css/main-ordena.css" />
+    </head>
+    
+    <body onclick="afuera();">
+        <!-- opacity -->
+        <div class="col-12 float-left modal-background hidden"></div>
+        
+        <!-- Menú -->
+        <header id="menu"></header>
+        
+         <!-- Header -->
+        <section class="col-12 no-padding" id="header">
+            <div class="col-5 no-pl logo float-left">
+                <img src="img/imgLogo.png" />
+            </div>
+            <div class="col-7 text-center mt-2 float-left no-padding">
+                <h1>ORDENA</h1>
+            </div>
+        </section>
+        
+        <section id="nav-indicador" class="col-12 float-left"> 
+            <a href="ordena.html" class="pull-left ml-2"><i class="fa fa-home"></i></a>
+        </section>
+        
+        <section class="main-wrapper col-12 float-left text-center mt-1 pt-1">
+            <h2 class="text-md text-color-default text-center text-bold margin-v-sm">¡Transacción realizada!</h2>
+
+            <p class="mt-4">Tú pedido se ha realizado con éxito </p>
+            <p><b>Tus datos de transacción son las siguientes por favor guarde esta informacion:</b></p>
+
+            <br/>
+            
+            <p>Folio: <b id="folio"></b></p>
+            <p>PayerID: <b id="id"></b></p>
+            <p>PaymentId: <b id="state"></b></p>
+            <p>Token: <b id="cart"></b></p>
+            <p>Fecha: <b id="create_time"></b></p>
+            
+            <p class="margin-v-md">Tu pedido se ha almacenado en tu historial, el cual puedes consultar a través de la opción (<a href="ordenaFavoritos.html"><i class="fa fa-book"> </i> historial</a>) en el menú principal</p>
+
+            <!-- Buttons -->
+            <section class="col-12 float-left mb-3 no-padding">
+                <div class="col-6 float-left no-pl">
+                    <a href="ordenaPromociones.html" class="btn btn-primary btn-fill btn-block">
+                        PROMOCIONES
+                    </a>
+                </div>
+                <div class="col-6 float-left no-pr">
+                    <a href="ordenaPlatillos.html" class="btn btn-primary btn-fill btn-block">
+                        HISTORIAL
+                    </a>
+                </div>
+            </section>
+        </section>
+
+        <!-- Menu -->
+        <div class="nav-inf" id="menus">
+            <a href="#">
+                <span class="fa fa-bars"></span>
+            </a>
+        </div>
+        
+        <!--JS-->
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/prefixfree.min.js"></script>
+        <script type="text/javascript" src="js/localstorage.js"></script> 
+        <script type="text/javascript" src="js/comun.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        <script>
+            getPaymentData();
+        </script>
+    </body>
+</html>

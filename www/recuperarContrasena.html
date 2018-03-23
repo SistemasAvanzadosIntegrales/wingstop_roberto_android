@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/font-awesome.css" />
+    </head>
+    
+    <body>
+        <!-- Header -->
+        <div class="col-12 no-padding" id="header">
+            <div class="col-5 no-pl logo float-left">
+                <img src="img/imgLogo.png" />
+            </div>
+            <div class="col-7 text-center mt-2 float-left no-padding">
+                <h1 ></h1>
+            </div>
+        </div> 
+
+        <div class="main-wrapper col-12 text-center mt-4">
+            <h3 class="text-blanco"><b>Recuperar Contraseña</b></h3>
+            
+            <form  class="form-group text-center" id="recuperar">
+                <label>
+                    <img style="max-width:250px" src="img/logo_blanco.png" />
+                    <br><br>
+                    Escriba los datos solicitados y 
+                    <br>presione el boton "Envíar"<br>
+                </label>
+    
+                <input type="text" class="form-control mt-4 text-left" id="email" name="email" placeholder="E-mail">
+                
+                <p class="alert alert-danger mt-4" id="alertaLogin" style="display:none !important;"></p>
+                
+                <div class="col-8 offset-2 text-left mt-4 no-padding">
+                    <a href="#" onclick="recuperarContrasena();" class="btn btn-primary btn-fill btn-block mt-4">
+                        Envíar
+                    </a>
+                </div>
+			</form>
+        </div>
+
+        <div id="menus"></div>
+        
+        <!--JS-->
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/prefixfree.min.js"></script>
+        <script type="text/javascript" src="js/localstorage.js"></script>    
+        <script type="text/javascript" src="js/comun.js"></script>
+    </body>
+</html>

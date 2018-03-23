@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+        
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        <link rel="stylesheet" href="css/menu.css" />
+        <link rel="stylesheet" href="css/modal.css" />
+    </head>
+    
+    <body onclick="afuera();">
+        
+        <!-- opacity -->
+        <div class="col-12 float-left modal-background hidden"></div>
+        
+        <!-- Menú -->
+        <header id="menu"></header>
+        
+         <!-- Header -->
+        <div class="col-12 no-padding" id="header">
+            <div class="col-5 no-pl logo float-left">
+                <img src="img/imgLogo.png" />
+            </div>
+            <div class="col-7 text-center mt-2 float-left no-padding">
+                <h1>DETALLE</h1>
+            </div>
+        </div>
+        
+        <div class="main-wrapper col-12 text-center mt-4">
+            
+            <div class="col-12 no-padding float-left">
+                <img id="imgPromocion" src="" width="100%">
+            </div>
+            
+            <div class="col-12 no-padding float-left mt-4 text-center" id="contenedorPromociones">
+                <p class="text-center" id="lblPromocion"></p>
+                <div class="col-10 offset-1 no-padding text-center mt-4">
+                    <a href="#" onclick="modal();" class="btn btn-primary btn-fill btn-block mt-2">
+                        CANJEAR PROMOCION
+                    </a>
+                </div>
+            </div>
+
+            <div id="fade" class="overlay" onclick="document.getElementById('light').style.display='none'; document.getElementById('fade').style.display='none'"></div>
+            <!-- fin base semi-transparente -->
+            
+            <!-- ventana modal --> 
+            <div id="light" class="modal2">
+                <h4>¿Deseas canjear esta promoción?<br></h4>
+                <p id="terminos" class="mt-3 text-justify" style="height: 200px; overflow: auto;"></p>
+                <!-- Buttons -->
+                <div class="col-6 mt-4 float-left no-pl">
+                    <a href="#" onclick="cerrar_modal();" class="btn btn-primary btn-fill btn-block">
+                        CERRAR
+                    </a>
+                </div>
+                <div class="col-6 float-left mt-4 no-pr">
+                    <a href="#" onclick="modal2();" class="btn btn-primary btn-fill btn-block">
+                        ACEPTAR
+                    </a>
+                </div>
+            </div>
+            <!-- fin ventana modal -->
+
+            <div id="fade2" class="overlay" onclick="document.getElementById('light2').style.display='none'; document.getElementById('fade').style.display='none'"></div>
+            <!-- fin base semi-transparente -->
+
+            <!-- ventana modal -->  
+            <div id="light2" class="modal2">
+                <h2 class="bullet">¡Operación exitosa!</h2>
+                <!--<label id="msg2" style="font-size:2em;"></label>-->
+                <div class="col-12 mt-4 text-center description">
+                    Puedes hacer valida esta promoción presentando este mensaje a tu mesero.
+                </div>
+                <div class="col-8 offset-2 mt-4 no-padding float-left">
+                    <a href="#" onclick="aceptar();" class="btn btn-primary btn-fill btn-block">
+                        Aceptar
+                    </a>
+                </div>
+            </div>
+            <!-- fin ventana modal fa fa-arrow-circle-left -->
+        </div>
+        
+        <!-- Menu -->
+        <div class="nav-inf" id="menus">
+            <a href="#">
+                <span class="fa fa-bars"></span>
+            </a>
+        </div>
+        
+        <!--JS--> 
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script> 
+        <script type="text/javascript" src="js/bootstrap.js"></script> 
+        <script type="text/javascript" src="js/prefixfree.min.js"></script>
+        <script type="text/javascript" src="js/localstorage.js"></script>
+        <script type="text/javascript" src="js/comun.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript">
+            
+            $(document).ready(function() {
+                $("#imgPromocion").attr("src", localStorage.getItem("cupon_img"));
+                $("#lblPromocion").html(localStorage.getItem("cupon_nom").toLocaleUpperCase()+"<br>"+localStorage.getItem("cupon_txt"));
+
+                if(localStorage.getItem('uso_cupon')){
+                    $('#msg2').html(localStorage.getItem("uso_cupon"));
+                }
+                
+                if(localStorage.getItem('cupon_ter')) {
+                    $('#terminos').html(localStorage.getItem("cupon_ter"));
+                }
+                else {
+                    $('#terminos').remove();
+                }
+            });
+            
+        </script>
+        
+        <script type="text/javascript">
+            
+            function modal() {
+                document.getElementById('light').style.display='block';
+                document.getElementById('fade').style.display='block';
+                $('#msg2').html(localStorage.getItem("cupon_tem"));
+                
+                $('html, body').animate({ scrollTop: 0 }, 'fast');
+            }//function
+            
+            function cerrar_modal() {
+                document.getElementById('light').style.display='none';
+                document.getElementById('fade').style.display='none';
+                document.getElementById('light2').style.display='none';
+                document.getElementById('fade2').style.display='none';
+                
+                $('html, body').animate({ scrollTop: 0 }, 'fast');
+            }
+            
+            function modal2() {
+                //alert("modal2");
+                document.getElementById('light').style.display='none';
+                document.getElementById('fade').style.display='none';
+                document.getElementById('light2').style.display='block';
+                document.getElementById('fade2').style.display='block';
+                
+                $('html, body').animate({ scrollTop: 0 }, 'fast');
+            }
+            
+            function aceptar() {
+                cerrar_modal();
+            }
+        
+        </script>
+    </body>
+</html>

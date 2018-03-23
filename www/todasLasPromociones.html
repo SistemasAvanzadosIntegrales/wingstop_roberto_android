@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+        
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        <link rel="stylesheet" href="css/menu.css" />
+        
+        <!-- JS -->
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="xdk/init-dev.js"></script>        
+        <script type="text/javascript" src="cordova.js"></script>    
+    </head>
+    
+    <body onclick="afuera();">
+        
+        <!-- opacity -->
+        <div class="col-12 float-left modal-background hidden"></div>
+        
+        <!-- Menú -->
+        <header id="menu"></header>
+        
+        <!-- Header -->
+        <div class="col-12 no-padding" id="header">
+            <div class="col-5 no-pl logo float-left">
+                <img src="img/imgLogo.png" />
+            </div>
+            <div class="col-7 text-center mt-2 float-left no-padding">
+                <h1>Promociones</h1>
+            </div>
+        </div>
+        
+        <div class="main-wrapper col-12 text-center mt-4">
+            
+            <!-- Buttons -->
+            <div class="col-6 mt-2 float-left no-pl">
+                <a href="misCupones.html" class="btn btn-primary btn-fill btn-block">
+                    CUPONES
+                </a>
+            </div>
+            <div class="col-6 float-left mt-2 no-pr">
+                <a href="todasLasPromociones.html" class="btn btn-primary btn-fill btn-block">
+                    PROMOCIONES
+                </a>
+            </div>
+
+            <!-- Imagenes promociones -->
+            <div class="col-12 mt-5 float-left no-padding" id="contenedorPromociones" style="overflow: hidden;"></div>
+        </div>
+        
+        <!-- Menu -->
+        <div class="nav-inf" id="menus">
+            <a href="#">
+                <span class="fa fa-bars"></span>
+            </a>
+        </div>
+        
+        <!--JS-->
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script> 
+        <script type="text/javascript" src="js/localstorage.js"></script>
+        <script type="text/javascript" src="js/comun.js"></script>
+        <script type="text/javascript" src="js/verPromociones.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/push.js"></script>
+        <script type="text/javascript">
+           
+            $(document).ready(function() {
+                if( !pughpharm.isLogged() ) {
+                    window.location = "index.html";
+                }
+                else {
+                    localStorage.removeItem('shopping');
+                    localStorage.removeItem('promotions');
+                    localStorage.removeItem('promotionsAll');
+                    localStorage.removeItem('plate');
+                    localStorage.removeItem('importe');
+                    localStorage.removeItem('collect_time');
+                    localStorage.removeItem('collect_date');
+                    localStorage.removeItem('branch');
+                    localStorage.removeItem('category');
+                }
+                
+                mostrarCuponesHorizontal();
+            });
+            
+            /**
+             * modal
+             **/
+            function modal(a, rutaImg, nombre, descripcion, terminos) {
+                if( pughpharm.isLogged() ) {
+                    
+                    localStorage['cupon_tem'] = a;
+                    localStorage['cupon_img'] = rutaImg;
+                    localStorage['cupon_nom'] = nombre;
+                    localStorage['cupon_txt'] = descripcion;
+                    localStorage['cupon_ter'] = terminos;
+                    
+                    window.location="detallePromocion.html";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+        
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        <link rel="stylesheet" href="css/menu.css" />
+        
+        <!-- JS -->
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="xdk/init-dev.js"></script>        
+        <script type="text/javascript" src="cordova.js"></script>         
+    </head>
+    
+    <body onclick="afuera();">
+        
+        <!-- opacity -->
+        <div class="col-12 float-left modal-background hidden"></div>
+        
+        <!-- Menú -->
+        <header id="menu"></header>
+        
+         <!-- Header -->
+        <div class="col-12 no-padding" id="header">
+            <div class="col-5 no-pl logo float-left">
+                <img src="img/imgLogo.png" />
+            </div>
+            <div class="col-7 text-center mt-2 float-left no-padding">
+                <h1>SUCURSALES</h1>
+            </div>
+        </div>
+        
+        <div class="main-wrapper col-12 text-center mt-4">
+    
+            <!-- Buttons -->
+            <div class="col-12 float-left mt-2 mb-3 no-padding">
+                <select id="estado" name="estado" class="form-control">
+                    <option value="">Selecciona el estado</option>
+                </select>      
+            </div>
+                
+            <!-- Google -->
+            <div class="col-12 float-left no-padding mt-4" id="googleMap" style="width:100%; height:300px;"></div>
+            
+            <section id="menu-sucursales" class="col-12 float-left no-padding mt-2">
+                <ul></ul>
+            </section>
+        </div>
+        
+        <!-- Menu -->
+        <div class="nav-inf" id="menus">
+            <a href="#">
+                <span class="fa fa-bars"></span>
+            </a>
+        </div>
+        
+        <!--JS--> 
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script> 
+        <script type="text/javascript" src="js/bootstrap.min.js"></script> 
+        <script type="text/javascript" src="js/prefixfree.min.js"></script>
+        <script type="text/javascript" src="js/localstorage.js"></script>
+        <script type="text/javascript" src="js/comun.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC_JcwZiLASKPD2GXxNq5JZO6dXJ6fkPuk"></script>
+        <script>
+            
+            /**
+             * Obtener estados
+             **/
+            $.ajax({
+                url: ruta_generica,
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    funcion   : 'getStatesOffice',
+                    idCliente : cliente
+                },
+                success:function(resp){
+                    
+                    //Validar que no haya errores
+                    if( resp[0].error == '' ) {
+                        
+                        //Recorrer todos los objetos.
+                        for( var i = 0; i <= resp.length-1; i++ ) {
+                            
+                            //Capitalizar texto
+                            var caps = resp[i].nombre.toLowerCase();                            
+                            caps = caps.charAt(0).toUpperCase() + caps.slice(1);
+                            
+                            //Adición de opciones al selector.
+                            $("#estado").append('<option value="'+resp[i].id+'" data-latitud="'+resp[i].latitud+'" data-longitud="'+resp[i].longitud+'">'+caps+'</option>');
+                        }
+                    }
+                    else {
+                        $("#alertaLogin").html(resp.error).show();
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("function: getStatesOffice()");
+                    console.log("Status: " + textStatus);
+                    console.log("Error: " + errorThrown);
+                }
+            });
+            
+            /**
+             * Google maps
+             */
+            $("#estado").on('change', function() {
+                var idEstado = this.value;
+                var latitud  = $( "#estado option:selected" ).attr('data-latitud');
+                var longitud = $( "#estado option:selected" ).attr('data-longitud');
+                
+                document.addEventListener("deviceready", function(){
+                    $.ajax({
+                        url: ruta_generica,
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data:{
+                            funcion   : 'getSucursal',
+                            idCliente : cliente,
+                            idEstado  : idEstado
+                        },
+                        success:function(resp){ 
+                            
+                            //console.log(resp);
+
+                            if( resp[0].error == '' ) {
+                                dibujaMapa(resp, latitud, longitud);
+                            }
+                            else {
+                                $("#alertaLogin").html(resp.error).show();
+                            }
+                        }
+                    });
+                }, false);
+            })
+            
+            var MiPosicion  = '';
+            var pointMarker = new Array();  //store marker in array
+            var Destinos    = new Array();  //store positions in array
+            
+            function dibujaMapa(sucu, lat, long) {
+                
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    
+                    //Posicionar mapa
+                    var mapProp = {
+                        //center : new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                        center : new google.maps.LatLng(lat, long),
+                        zoom   : 8, mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+                    
+                    var map    = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+                    
+                    //Mi posición
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+                    });
+
+                    marker.setMap(map);
+                    
+                    //Marcar las sucursales
+                    for( var i = 0; i <= sucu.length-1; i++) {
+
+                        var latit = parseFloat(sucu[i].latitud).toFixed(6);
+                        var longi = parseFloat(sucu[i].longitud).toFixed(6);
+
+                        if( !isNaN(latit) && !isNaN(longi) && sucu[i].nombre != '' && sucu[i].nombre != null) {
+                            
+                            miSucursal     = new google.maps.LatLng(latit, longi);
+                            pointMarker[i] = new google.maps.Marker({
+                                position  : miSucursal,
+                                map       : map,
+                                animation : google.maps.Animation.BOUNCE,
+                            });
+                            
+                            attachSecretMessage(pointMarker[i], sucu[i].description);
+                        }
+                    }
+                }, function(error) {
+                    
+                    alert("Ve a configuración y activa tu GPS/ubicación");
+                    
+                    if(error.code == PositionError.PERMISSION_DENIED) {
+                        alert("App doesn't have permission to use GPS");
+                    }
+                    else if(error.code == PositionError.POSITION_UNAVAILABLE) {
+                        alert("No GPS device found");
+                    }
+                    else if(error.code == PositionError.TIMEOUT) {
+                        alert("Its taking too long find user location");
+                    }
+                    else {
+                        alert("An unknown error occured");
+                    }
+                }, { maximumAge : 3000, 
+                     timeout    : 5000, 
+                    enableHighAccuracy: true 
+                });
+                
+                // Attaches an info window to a marker with the provided message. When the
+                // marker is clicked, the info window will open with the secret message.
+                function attachSecretMessage(marker, secretMessage) {
+                    var infowindow = new google.maps.InfoWindow({
+                        content: secretMessage
+                    });
+                    
+                    marker.addListener('click', function() {
+                        infowindow.open(marker.get('map'), marker);
+                    });
+                }
+
+                $( "#menu-sucursales ul" ).empty();
+                
+                //Lista de sucursales
+                $.each(sucu, function(i, item) {
+                    $( "#menu-sucursales ul" ).append( "<li><h3>"+(i+1)+". "+item.nombre+"</h3><p>"+item.description+"</p></li>" );
+                });
+            }//function
+            
+        </script>
+    </body>
+</html>
